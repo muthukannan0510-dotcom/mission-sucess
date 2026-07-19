@@ -8,19 +8,20 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
         body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #f4f7f6; }
         .header { background-color: #0056b3; color: white; padding: 20px; text-align: center; }
-        .container { max-width: 700px; margin: 40px auto; padding: 0 20px; }
+        .container { max-width: 750px; margin: 40px auto; padding: 0 20px; }
         .course-card { background: white; padding: 20px; border-radius: 10px; text-align: center; cursor: pointer; border: 2px solid #0056b3; }
         .course-card h2 { color: #0056b3; margin: 0; }
         .hidden-content { display: none; }
-        .subject-btn { width: 100%; background: #0056b3; color: white; border: none; padding: 15px; margin-top: 10px; font-weight: 600; border-radius: 6px; cursor: pointer; text-align: left; display: flex; justify-content: space-between; }
+        .subject-btn { width: 100%; background: #0056b3; color: white; border: none; padding: 15px; margin-top: 15px; font-weight: 600; border-radius: 6px; cursor: pointer; text-align: left; display: flex; justify-content: space-between; font-size: 16px; }
         .unit-box { margin-left: 15px; margin-top: 5px; }
-        .unit-btn { width: 100%; background: #ffffff; border: 1px solid #ccc; padding: 12px; margin-top: 8px; font-weight: 600; border-radius: 5px; cursor: pointer; text-align: left; display: flex; justify-content: space-between; }
+        .unit-btn { width: 100%; background: #ffffff; border: 1px solid #ccc; padding: 12px; margin-top: 8px; font-weight: 600; border-radius: 5px; cursor: pointer; text-align: left; display: flex; justify-content: space-between; font-size: 14px; color: #333; }
+        .unit-btn:hover { background-color: #f0f8ff; color: #0056b3; }
         .lesson-list { background: #ffffff; border: 1px solid #ddd; border-top: none; padding: 5px 0; margin-left: 15px; }
         .lesson-item { border-bottom: 1px solid #f4f4f4; }
         .lesson-title { padding: 12px 20px; color: #444; font-size: 14px; cursor: pointer; display: flex; justify-content: space-between; }
         .lesson-title:hover { background-color: #e6f2ff; color: #0056b3; }
         .action-box { background: #fafafa; padding: 12px 20px; display: none; gap: 15px; }
-        .action-btn { flex: 1; padding: 10px; text-align: center; border-radius: 5px; font-weight: 600; text-decoration: none; border: 1px solid #ccc; }
+        .action-btn { flex: 1; padding: 10px; text-align: center; border-radius: 5px; font-weight: 600; text-decoration: none; border: 1px solid #ccc; font-size: 14px; }
         .btn-notes { background: #e8f5e9; color: #2e7d32; }
         .btn-test { background: #e3f2fd; color: #1565c0; }
     </style>
@@ -32,31 +33,67 @@
     <div class="container">
         <div class="course-card" onclick="toggleMenu('tnpsc-dash')">
             <h2>TNPSC Group 4</h2>
-            <p>பாடத்திட்டங்களைப் பார்க்க இங்கே கிளிக் செய்யவும் ▼</p>
+            <p>ஒருங்கிணைந்த குடிமைப் பணிகள் தேர்வு-IV ▼</p>
         </div>
 
         <div id="tnpsc-dash" class="hidden-content" style="background:#eef2f5; padding:15px; margin-top:15px; border-radius:8px;">
             
-            <button class="subject-btn" onclick="toggleMenu('tamil-units')">📘 பொதுத் தமிழ் <span>+</span></button>
+            <!-- பகுதி இ: தமிழ் தகுதி மற்றும் மதிப்பீட்டுத் தேர்வு -->
+            <button class="subject-btn" onclick="toggleMenu('tamil-units')">📘 பகுதி இ: தமிழ் தகுதி மற்றும் மதிப்பீட்டுத் தேர்வு <span>+</span></button>
             <div id="tamil-units" class="hidden-content unit-box">
-                <button class="unit-btn" onclick="toggleMenu('t-ilakkanam')">பகுதி அ: இலக்கணம் <span>+</span></button>
+                <button class="unit-btn" onclick="toggleMenu('t-ilakkanam')">அலகு I: இலக்கணம் <span>+</span></button>
                 <div id="t-ilakkanam" class="hidden-content lesson-list"></div>
 
-                <button class="unit-btn" onclick="toggleMenu('t-ilakkiyam')">பகுதி ஆ: இலக்கியம் <span>+</span></button>
-                <div id="t-ilakkiyam" class="hidden-content lesson-list"></div>
+                <button class="unit-btn" onclick="toggleMenu('t-sollagarathi')">அலகு II: சொல்லகராதி <span>+</span></button>
+                <div id="t-sollagarathi" class="hidden-content lesson-list"></div>
+
+                <button class="unit-btn" onclick="toggleMenu('t-eluthuthiran')">அலகு III: எழுதும் திறன் <span>+</span></button>
+                <div id="t-eluthuthiran" class="hidden-content lesson-list"></div>
+
+                <button class="unit-btn" onclick="toggleMenu('t-kalaisorkal')">அலகு IV: கலைச் சொற்கள் <span>+</span></button>
+                <div id="t-kalaisorkal" class="hidden-content lesson-list"></div>
+
+                <button class="unit-btn" onclick="toggleMenu('t-vasithal')">அலகு V: வாசித்தல் - புரிந்து கொள்ளும் திறன் <span>+</span></button>
+                <div id="t-vasithal" class="hidden-content lesson-list"></div>
+
+                <button class="unit-btn" onclick="toggleMenu('t-molipeyarppu')">அலகு VI: எளிய மொழி பெயர்ப்பு <span>+</span></button>
+                <div id="t-molipeyarppu" class="hidden-content lesson-list"></div>
                 
-                <button class="unit-btn" onclick="toggleMenu('t-arignargal')">பகுதி இ: தமிழ் அறிஞர்கள் <span>+</span></button>
-                <div id="t-arignargal" class="hidden-content lesson-list"></div>
+                <button class="unit-btn" onclick="toggleMenu('t-ilakkiyam')">அலகு VII: இலக்கியம், தமிழ் அறிஞர்களும்... <span>+</span></button>
+                <div id="t-ilakkiyam" class="hidden-content lesson-list"></div>
             </div>
 
-            <button class="subject-btn" onclick="toggleMenu('gk-units')" style="background: #0077b6;">🌍 பொது அறிவு <span>+</span></button>
+            <!-- பகுதி அ: பொது அறிவு -->
+            <button class="subject-btn" onclick="toggleMenu('gk-units')" style="background: #0077b6;">🌍 பகுதி அ: பொது அறிவு <span>+</span></button>
             <div id="gk-units" class="hidden-content unit-box">
-                <button class="unit-btn" onclick="toggleMenu('g-science')">அறிவியல் <span>+</span></button>
+                <button class="unit-btn" onclick="toggleMenu('g-science')">அலகு I: பொது அறிவியல் <span>+</span></button>
                 <div id="g-science" class="hidden-content lesson-list"></div>
+
+                <button class="unit-btn" onclick="toggleMenu('g-geography')">அலகு II: புவியியல் <span>+</span></button>
+                <div id="g-geography" class="hidden-content lesson-list"></div>
+
+                <button class="unit-btn" onclick="toggleMenu('g-history')">அலகு III: இந்தியாவின் வரலாறு, பண்பாடு... <span>+</span></button>
+                <div id="g-history" class="hidden-content lesson-list"></div>
+
+                <button class="unit-btn" onclick="toggleMenu('g-polity')">அலகு IV: இந்திய ஆட்சியியல் <span>+</span></button>
+                <div id="g-polity" class="hidden-content lesson-list"></div>
+
+                <button class="unit-btn" onclick="toggleMenu('g-economy')">அலகு V: இந்தியப் பொருளாதாரம்... <span>+</span></button>
+                <div id="g-economy" class="hidden-content lesson-list"></div>
+
+                <button class="unit-btn" onclick="toggleMenu('g-tn_history')">அலகு VI: தமிழ்நாட்டின் வரலாறு, பண்பாடு... <span>+</span></button>
+                <div id="g-tn_history" class="hidden-content lesson-list"></div>
             </div>
 
-            <button class="subject-btn" onclick="toggleMenu('m-maths')" style="background: #0096c7;">🧠 திறனறிதல் (Maths) <span>+</span></button>
-            <div id="m-maths" class="hidden-content lesson-list" style="margin-left:0; margin-top:10px;"></div>
+            <!-- பகுதி ஆ: திறனறிவும் மனக்கணக்கு நுண்ணறிவும் -->
+            <button class="subject-btn" onclick="toggleMenu('maths-units')" style="background: #0096c7;">🧠 பகுதி ஆ: திறனறிவு மற்றும் நுண்ணறிவு <span>+</span></button>
+            <div id="maths-units" class="hidden-content unit-box">
+                <button class="unit-btn" onclick="toggleMenu('m-aptitude')">அலகு I: திறனறிவு <span>+</span></button>
+                <div id="m-aptitude" class="hidden-content lesson-list"></div>
+
+                <button class="unit-btn" onclick="toggleMenu('m-reasoning')">அலகு II: காரணவியல் <span>+</span></button>
+                <div id="m-reasoning" class="hidden-content lesson-list"></div>
+            </div>
 
         </div>
     </div>
@@ -78,10 +115,22 @@
             .then(data => {
                 const map = {
                     't-ilakkanam': {folder: 'tamil', sub: 'ilakkanam'},
+                    't-sollagarathi': {folder: 'tamil', sub: 'sollagarathi'},
+                    't-eluthuthiran': {folder: 'tamil', sub: 'eluthuthiran'},
+                    't-kalaisorkal': {folder: 'tamil', sub: 'kalaisorkal'},
+                    't-vasithal': {folder: 'tamil', sub: 'vasithal'},
+                    't-molipeyarppu': {folder: 'tamil', sub: 'molipeyarppu'},
                     't-ilakkiyam': {folder: 'tamil', sub: 'ilakkiyam'},
-                    't-arignargal': {folder: 'tamil', sub: 'arignargal'},
+                    
                     'g-science': {folder: 'gk', sub: 'science'},
-                    'm-maths': {folder: 'maths', sub: 'maths'}
+                    'g-geography': {folder: 'gk', sub: 'geography'},
+                    'g-history': {folder: 'gk', sub: 'history'},
+                    'g-polity': {folder: 'gk', sub: 'polity'},
+                    'g-economy': {folder: 'gk', sub: 'economy'},
+                    'g-tn_history': {folder: 'gk', sub: 'tn_history'},
+                    
+                    'm-aptitude': {folder: 'maths', sub: 'aptitude'},
+                    'm-reasoning': {folder: 'maths', sub: 'reasoning'}
                 };
 
                 for (const [divId, path] of Object.entries(map)) {
@@ -99,6 +148,8 @@
                             </div>`;
                         });
                         el.innerHTML = html || `<div style="padding:10px; color:#999; text-align:center;">பாடங்கள் இன்னும் பதிவேற்றப்படவில்லை</div>`;
+                    } else if(el) {
+                        el.innerHTML = `<div style="padding:10px; color:#999; text-align:center;">பாடங்கள் இன்னும் பதிவேற்றப்படவில்லை</div>`;
                     }
                 }
             })
