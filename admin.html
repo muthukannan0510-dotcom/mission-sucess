@@ -3,263 +3,249 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Panel - MISSION SUCCESS ACADEMY</title>
+    <title>Super Admin - MISSION SUCCESS</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
-
-        body {
-            margin: 0;
-            font-family: 'Poppins', sans-serif;
-            background-color: #f4f7f6;
-            color: #333;
-        }
-
-        .header {
-            background-color: #0d324d; 
-            color: white;
-            padding: 20px;
-            text-align: center;
-            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-        }
-
-        .container {
-            max-width: 800px;
-            margin: 30px auto;
-            background: white;
-            padding: 30px;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            color: #0056b3;
-        }
-
-        input[type="text"], textarea, select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #ccc;
-            border-radius: 6px;
-            font-size: 14px;
-            font-family: inherit;
-        }
-
-        textarea {
-            resize: vertical;
-            height: 120px;
-        }
-
-        .question-box {
-            background: #f9f9f9;
-            padding: 20px;
-            border: 1px dashed #0056b3;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-
-        .btn {
-            background-color: #0056b3;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            font-size: 15px;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: 0.3s;
-        }
-
-        .btn:hover {
-            background-color: #004494;
-        }
-
-        .btn-success {
-            background-color: #28a745;
-            width: 100%;
-            padding: 15px;
-            font-size: 18px;
-            margin-top: 20px;
-        }
-        
-        .btn-success:hover {
-            background-color: #218838;
-        }
-
-        .output-box {
-            margin-top: 30px;
-            display: none;
-        }
-
-        .output-box textarea {
-            height: 200px;
-            background: #282c34;
-            color: #61dafb;
-            font-family: monospace;
-            font-size: 14px;
-        }
+        body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #f4f7f6; color: #333; }
+        .header { background-color: #0d324d; color: white; padding: 20px; text-align: center; }
+        .container { max-width: 800px; margin: 30px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .config-box { background: #fff3cd; padding: 20px; border-left: 5px solid #ffc107; border-radius: 5px; margin-bottom: 25px; }
+        .form-group { margin-bottom: 20px; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; color: #0056b3; }
+        input[type="text"], input[type="password"], textarea, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
+        textarea { height: 100px; resize: vertical; }
+        .q-box { background: #f9f9f9; padding: 15px; border: 1px dashed #0056b3; border-radius: 6px; margin-bottom: 15px; }
+        .btn { background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; }
+        .btn-success { background: #28a745; width: 100%; padding: 15px; font-size: 16px; margin-top: 20px; }
+        .status { margin-top: 20px; font-weight: bold; text-align: center; padding: 10px; border-radius: 5px; display: none; }
+        .status.success { background: #d4edda; color: #155724; }
+        .status.error { background: #f8d7da; color: #721c24; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <h1>MISSION SUCCESS - ADMIN PANEL</h1>
-        <p>புதிய பாடம் மற்றும் தேர்வுகளை உருவாக்க (JSON Generator)</p>
+        <h1>MISSION SUCCESS - SUPER ADMIN</h1>
     </div>
 
     <div class="container">
-        <!-- 1. பாடத்தின் அடிப்படை விவரங்கள் -->
-        <div class="form-group">
-            <label>Topic ID (ஆங்கிலத்தில் சிறிய எழுத்துக்களில், இடைவெளி இன்றி. உதா: thirukkural)</label>
-            <input type="text" id="topicId" placeholder="e.g., thirukkural" required>
-        </div>
-
-        <div class="form-group">
-            <label>பாடத்தின் தலைப்பு (Lesson Title)</label>
-            <input type="text" id="lessonTitle" placeholder="உதா: 1. திருக்குறள் - பொருட்பால்" required>
-        </div>
-
-        <div class="form-group">
-            <label>பாடக்குறிப்புகள் (Notes - ஒவ்வொரு பத்திக்கும் Enter அழுத்தவும்)</label>
-            <textarea id="lessonNotes" placeholder="பாடக்குறிப்புகளை இங்கே தட்டச்சு செய்யவும்..."></textarea>
-        </div>
-
-        <hr style="margin: 30px 0; border-top: 1px solid #ddd;">
-
-        <!-- 2. தேர்வு வினாக்கள் (Questions) -->
-        <h3 style="color: #0056b3;">தேர்வு வினாக்களைச் சேர்க்க (Add Quiz Questions)</h3>
         
-        <div id="questionsContainer">
-            <!-- Questions will be added here dynamically -->
+        <!-- GitHub Settings -->
+        <div id="setupBlock" class="config-box">
+            <h3>⚙️ GitHub அமைப்புகள்</h3>
+            <div class="form-group">
+                <label>GitHub Personal Access Token:</label>
+                <input type="password" id="ghTokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxx">
+            </div>
+            <div class="form-group">
+                <label>Repository Name:</label>
+                <input type="text" id="ghRepoInput" placeholder="username/repository">
+            </div>
+            <button class="btn" onclick="saveSettings()">💾 Save & Hide</button>
         </div>
 
-        <button type="button" class="btn" onclick="addQuestion()">+ புதிய கேள்வி சேர்</button>
+        <!-- Lesson Details -->
+        <div id="lessonBlock" style="display: none;">
+            <h3>📚 பாட விவரங்கள்</h3>
+            
+            <div class="form-group">
+                <label>முதன்மைப் பாடம் (Main Subject):</label>
+                <select id="folderName" onchange="updateSubTopics()">
+                    <option value="tamil">📘 பொதுத் தமிழ்</option>
+                    <option value="gk">🌍 பொது அறிவு</option>
+                    <option value="maths">🧠 திறனறிதல் (Maths)</option>
+                </select>
+            </div>
 
-        <!-- 3. Generate பட்டன் -->
-        <button type="button" class="btn btn-success" onclick="generateJSON()">Generate JSON Code</button>
+            <!-- புதிதாக சேர்க்கப்பட்ட உட்தலைப்பு (Sub-topic) பகுதி -->
+            <div class="form-group">
+                <label>உட்தலைப்பு (Sub Topic):</label>
+                <select id="subTopic"></select>
+            </div>
 
-        <!-- 4. Output Area -->
-        <div class="output-box" id="outputSection">
-            <label>உருவாக்கப்பட்ட JSON குறியீடு (இதைக் காப்பி செய்து study_material.html-ல் Paste செய்யவும்):</label>
-            <textarea id="jsonOutput" readonly></textarea>
+            <div class="form-group">
+                <label>ஆங்கிலப் பெயர் (File Name - No spaces):</label>
+                <input type="text" id="fileName" placeholder="உதா: poruthuthal" required>
+            </div>
+            <div class="form-group">
+                <label>தலைப்பு (தமிழ் - உதா: 1. பொருத்துதல்):</label>
+                <input type="text" id="lessonTitle" required>
+            </div>
+            <div class="form-group">
+                <label>பாடக்குறிப்புகள் (Enter அழுத்தவும்):</label>
+                <textarea id="lessonNotes"></textarea>
+            </div>
+
+            <h3>✍️ தேர்வு வினாக்கள்</h3>
+            <div id="quizContainer"></div>
+            <button type="button" class="btn" onclick="addQuestion()">+ புதிய கேள்வி சேர்</button>
+
+            <button type="button" class="btn btn-success" id="uploadBtn" onclick="uploadToGitHub()">🚀 GitHub-ல் Upload செய்</button>
+            <div id="statusMsg" class="status"></div>
         </div>
-
     </div>
 
     <script>
-        let questionCount = 0;
-
-        // புதிய கேள்விகளைச் சேர்க்கும் Function
-        function addQuestion() {
-            questionCount++;
-            const container = document.getElementById("questionsContainer");
-            
-            const questionHTML = `
-                <div class="question-box" id="qBox_${questionCount}">
-                    <div class="form-group">
-                        <label>கேள்வி ${questionCount}:</label>
-                        <input type="text" id="q_${questionCount}" placeholder="கேள்வியை உள்ளிடவும்..." required>
-                    </div>
-                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
-                        <div style="flex: 1; min-width: 200px;">
-                            <label>Option 1 (Index 0):</label>
-                            <input type="text" id="q_${questionCount}_opt0" required>
-                        </div>
-                        <div style="flex: 1; min-width: 200px;">
-                            <label>Option 2 (Index 1):</label>
-                            <input type="text" id="q_${questionCount}_opt1" required>
-                        </div>
-                        <div style="flex: 1; min-width: 200px;">
-                            <label>Option 3 (Index 2):</label>
-                            <input type="text" id="q_${questionCount}_opt2" required>
-                        </div>
-                        <div style="flex: 1; min-width: 200px;">
-                            <label>Option 4 (Index 3):</label>
-                            <input type="text" id="q_${questionCount}_opt3" required>
-                        </div>
-                    </div>
-                    <div class="form-group" style="margin-top: 15px;">
-                        <label style="color: #d93025;">சரியான விடையைத் தேர்ந்தெடுக்கவும் (Correct Answer):</label>
-                        <select id="q_${questionCount}_ans">
-                            <option value="0">Option 1 (Index 0)</option>
-                            <option value="1">Option 2 (Index 1)</option>
-                            <option value="2">Option 3 (Index 2)</option>
-                            <option value="3">Option 4 (Index 3)</option>
-                        </select>
-                    </div>
-                </div>
-            `;
-            container.insertAdjacentHTML('beforeend', questionHTML);
-        }
-
-        // முதல் கேள்வியை தானாகவே திரையில் காட்ட
-        window.onload = function() {
-            addQuestion();
+        const subTopicMap = {
+            tamil: [
+                {id: 'ilakkanam', name: 'பகுதி அ: இலக்கணம்'},
+                {id: 'ilakkiyam', name: 'பகுதி ஆ: இலக்கியம்'},
+                {id: 'arignargal', name: 'பகுதி இ: தமிழ் அறிஞர்கள்'}
+            ],
+            gk: [
+                {id: 'science', name: 'அறிவியல்'},
+                {id: 'history', name: 'வரலாறு மற்றும் பண்பாடு'},
+                {id: 'polity', name: 'ஆட்சியியல் மற்றும் பொருளாதாரம்'}
+            ],
+            maths: [
+                {id: 'maths', name: 'திறனறிதல் (Maths)'}
+            ]
         };
 
-        // JSON உருவாக்குதல்
-        function generateJSON() {
-            const topicId = document.getElementById("topicId").value.trim();
-            const title = document.getElementById("lessonTitle").value.trim();
-            const notesText = document.getElementById("lessonNotes").value;
-            
-            if(!topicId || !title) {
-                alert("தயவுசெய்து Topic ID மற்றும் தலைப்பை உள்ளிடவும்!");
-                return;
+        function updateSubTopics() {
+            const main = document.getElementById('folderName').value;
+            const sub = document.getElementById('subTopic');
+            sub.innerHTML = subTopicMap[main].map(s => `<option value="${s.id}">${s.name}</option>`).join('');
+        }
+
+        function checkSettings() {
+            const token = localStorage.getItem('ms_gh_token');
+            const repo = localStorage.getItem('ms_gh_repo');
+            if(token && repo) {
+                document.getElementById('setupBlock').style.display = 'none';
+                document.getElementById('lessonBlock').style.display = 'block';
+                updateSubTopics(); 
+            } else {
+                document.getElementById('setupBlock').style.display = 'block';
+                document.getElementById('lessonBlock').style.display = 'none';
             }
+        }
 
-            // Notes-ஐ தனித்தனி வரிகளாகப் பிரித்தல்
-            const notesArray = notesText.split('\n').filter(note => note.trim() !== "");
+        function saveSettings() {
+            const t = document.getElementById('ghTokenInput').value.trim();
+            const r = document.getElementById('ghRepoInput').value.trim();
+            if(t && r) {
+                localStorage.setItem('ms_gh_token', t);
+                localStorage.setItem('ms_gh_repo', r);
+                checkSettings();
+            } else {
+                alert("Token மற்றும் Repo-ஐ உள்ளிடவும்!");
+            }
+        }
 
-            // கேள்விகளைத் தொகுத்தல்
-            const quizArray = [];
-            for(let i = 1; i <= questionCount; i++) {
-                const qText = document.getElementById(`q_${i}`);
-                if(qText && qText.value.trim() !== "") {
-                    const opt0 = document.getElementById(`q_${i}_opt0`).value.trim();
-                    const opt1 = document.getElementById(`q_${i}_opt1`).value.trim();
-                    const opt2 = document.getElementById(`q_${i}_opt2`).value.trim();
-                    const opt3 = document.getElementById(`q_${i}_opt3`).value.trim();
-                    const ans = parseInt(document.getElementById(`q_${i}_ans`).value);
+        let qCount = 0;
+        function addQuestion() {
+            qCount++;
+            const html = `
+                <div class="q-box" id="q_${qCount}">
+                    <label>கேள்வி ${qCount}:</label>
+                    <input type="text" id="qtext_${qCount}" style="margin-bottom:10px;">
+                    <div style="display:flex; gap:10px; margin-bottom:10px;">
+                        <input type="text" id="opt0_${qCount}" placeholder="Opt 1">
+                        <input type="text" id="opt1_${qCount}" placeholder="Opt 2">
+                        <input type="text" id="opt2_${qCount}" placeholder="Opt 3">
+                        <input type="text" id="opt3_${qCount}" placeholder="Opt 4">
+                    </div>
+                    <label>சரியான விடை:</label>
+                    <select id="ans_${qCount}">
+                        <option value="0">Opt 1</option>
+                        <option value="1">Opt 2</option>
+                        <option value="2">Opt 3</option>
+                        <option value="3">Opt 4</option>
+                    </select>
+                </div>`;
+            document.getElementById('quizContainer').insertAdjacentHTML('beforeend', html);
+        }
 
-                    quizArray.push({
-                        "q": qText.value.trim(),
-                        "options": [opt0, opt1, opt2, opt3],
-                        "ans": ans
+        window.onload = function() { checkSettings(); addQuestion(); };
+
+        // GitHub Base64 Encoder (Supports Tamil)
+        function utf8ToBase64(str) {
+            return btoa(unescape(encodeURIComponent(str)));
+        }
+
+        async function uploadToGitHub() {
+            const token = localStorage.getItem('ms_gh_token');
+            const repo = localStorage.getItem('ms_gh_repo');
+            const folder = document.getElementById('folderName').value;
+            const subTopic = document.getElementById('subTopic').value;
+            const file = document.getElementById('fileName').value.trim();
+            const title = document.getElementById('lessonTitle').value.trim();
+            const notes = document.getElementById('lessonNotes').value.split('\n').filter(n => n.trim() !== "");
+            const btn = document.getElementById('uploadBtn');
+            const statusBox = document.getElementById('statusMsg');
+
+            if(!file || !title) return alert("ஆங்கிலப் பெயர் மற்றும் தலைப்பை உள்ளிடவும்!");
+
+            btn.innerText = "⏳ Uploading..."; btn.disabled = true;
+
+            const quiz = [];
+            for(let i=1; i<=qCount; i++) {
+                const q = document.getElementById(`qtext_${i}`);
+                if(q && q.value.trim() !== "") {
+                    quiz.push({
+                        q: q.value.trim(),
+                        options: [
+                            document.getElementById(`opt0_${i}`).value,
+                            document.getElementById(`opt1_${i}`).value,
+                            document.getElementById(`opt2_${i}`).value,
+                            document.getElementById(`opt3_${i}`).value
+                        ],
+                        ans: parseInt(document.getElementById(`ans_${i}`).value)
                     });
                 }
             }
 
-            // JSON கட்டமைப்பை உருவாக்குதல்
-            const finalData = {
-                [topicId]: {
-                    "title": title,
-                    "notes": notesArray,
-                    "quiz": quizArray
+            try {
+                // 1. மாஸ்டர் Syllabus.json ஐ அப்டேட் செய்தல்
+                const syllabusUrl = `https://api.github.com/repos/${repo}/contents/data/syllabus.json`;
+                let syllabus = { "tamil": {}, "gk": {}, "maths": {} };
+                let syllabusSha = null;
+
+                const getSyllabus = await fetch(syllabusUrl, { headers: { "Authorization": `token ${token}` } });
+                if(getSyllabus.ok) {
+                    const sData = await getSyllabus.json();
+                    syllabusSha = sData.sha;
+                    syllabus = JSON.parse(decodeURIComponent(escape(atob(sData.content))));
                 }
-            };
 
-            // Output-ஐ திரையில் காட்டுதல்
-            const outputSection = document.getElementById("outputSection");
-            const jsonOutput = document.getElementById("jsonOutput");
-            
-            // Format JSON with 4 spaces for readability
-            let formattedJSON = JSON.stringify(finalData, null, 4);
-            
-            // கமா (,) சேர்ப்பதற்கு வசதியாக ஆரம்ப மற்றும் இறுதி பிராக்கெட்டுகளை நீக்கித் தர
-            formattedJSON = formattedJSON.slice(1, -2); 
+                if(!syllabus[folder]) syllabus[folder] = {};
+                if(!syllabus[folder][subTopic]) syllabus[folder][subTopic] = [];
+                
+                // புதிய பாடத்தை லிஸ்டில் சேர்த்தல்
+                const existingIndex = syllabus[folder][subTopic].findIndex(l => l.file === file);
+                if(existingIndex >= 0) syllabus[folder][subTopic][existingIndex].title = title;
+                else syllabus[folder][subTopic].push({ file: file, title: title });
 
-            jsonOutput.value = formattedJSON + ",";
-            outputSection.style.display = "block";
-            
-            // திரையை கீழே நகர்த்தல்
-            window.scrollTo(0, document.body.scrollHeight);
+                const sBody = { message: `Update Syllabus: ${title}`, content: utf8ToBase64(JSON.stringify(syllabus, null, 4)) };
+                if(syllabusSha) sBody.sha = syllabusSha;
+                await fetch(syllabusUrl, { method: 'PUT', headers: { "Authorization": `token ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(sBody) });
+
+                // 2. பாடத்தை (Lesson JSON) குறிப்பிட்ட ஃபோல்டரில் சேமித்தல்
+                const lessonUrl = `https://api.github.com/repos/${repo}/contents/data/${folder}/${subTopic}/${file}.json`;
+                let lessonSha = null;
+                const getLesson = await fetch(lessonUrl, { headers: { "Authorization": `token ${token}` } });
+                if(getLesson.ok) lessonSha = (await getLesson.json()).sha;
+
+                const lessonData = { title, notes, quiz };
+                const lBody = { message: `Add/Update lesson: ${title}`, content: utf8ToBase64(JSON.stringify(lessonData, null, 4)) };
+                if(lessonSha) lBody.sha = lessonSha;
+                
+                const putLesson = await fetch(lessonUrl, { method: 'PUT', headers: { "Authorization": `token ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(lBody) });
+                
+                if(putLesson.ok) {
+                    statusBox.className = "status success";
+                    statusBox.innerText = "🎉 வெற்றி! பாடம் Dashboard-ல் சேர்க்கப்பட்டுவிட்டது.";
+                } else throw new Error("Upload Failed");
+
+            } catch (error) {
+                statusBox.className = "status error";
+                statusBox.innerText = "❌ பிழை: " + error.message;
+            } finally {
+                statusBox.style.display = "block";
+                btn.innerText = "🚀 GitHub-ல் Upload செய்"; btn.disabled = false;
+                setTimeout(() => statusBox.style.display = "none", 4000);
+            }
         }
     </script>
 </body>
