@@ -8,31 +8,34 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
         body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #f4f7f6; color: #333; }
         .header { background-color: #0d324d; color: white; padding: 20px; text-align: center; }
-        .container { max-width: 800px; margin: 30px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .container { max-width: 700px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .config-box { background: #fff3cd; padding: 20px; border-left: 5px solid #ffc107; border-radius: 5px; margin-bottom: 25px; }
         .form-group { margin-bottom: 20px; }
         label { display: block; font-weight: 600; margin-bottom: 8px; color: #0056b3; }
-        input[type="text"], input[type="password"], textarea, select { width: 100%; padding: 10px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; }
-        textarea { height: 100px; resize: vertical; }
-        .q-box { background: #f9f9f9; padding: 15px; border: 1px dashed #0056b3; border-radius: 6px; margin-bottom: 15px; }
-        .btn { background: #0056b3; color: white; border: none; padding: 10px 15px; border-radius: 5px; cursor: pointer; font-weight: 600; }
-        .btn-success { background: #28a745; width: 100%; padding: 15px; font-size: 16px; margin-top: 20px; }
-        .status { margin-top: 20px; font-weight: bold; text-align: center; padding: 10px; border-radius: 5px; display: none; }
-        .status.success { background: #d4edda; color: #155724; }
-        .status.error { background: #f8d7da; color: #721c24; }
+        input[type="text"], input[type="password"], select, input[type="file"] { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
+        
+        .upload-box { background: #f9fbff; padding: 20px; border: 2px dashed #0056b3; border-radius: 8px; text-align: center; margin-bottom: 20px; }
+        .upload-box input[type="file"] { margin-top: 10px; padding: 10px; background: white; cursor: pointer; }
+        
+        .btn { background: #0056b3; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-weight: 600; }
+        .btn-success { background: #28a745; width: 100%; padding: 15px; font-size: 18px; margin-top: 10px; }
+        .status { margin-top: 20px; font-weight: bold; text-align: center; padding: 15px; border-radius: 5px; display: none; }
+        .status.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
+        .status.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
     </style>
 </head>
 <body>
 
     <div class="header">
         <h1>MISSION SUCCESS - SUPER ADMIN</h1>
+        <p style="margin: 0;">(JSON File Upload Mode)</p>
     </div>
 
     <div class="container">
         
         <!-- GitHub Settings -->
         <div id="setupBlock" class="config-box">
-            <h3>⚙️ GitHub அமைப்புகள்</h3>
+            <h3 style="margin-top:0;">⚙️ GitHub அமைப்புகள்</h3>
             <div class="form-group">
                 <label>GitHub Personal Access Token:</label>
                 <input type="password" id="ghTokenInput" placeholder="ghp_xxxxxxxxxxxxxxxxx">
@@ -41,15 +44,15 @@
                 <label>Repository Name:</label>
                 <input type="text" id="ghRepoInput" placeholder="username/repository">
             </div>
-            <button class="btn" onclick="saveSettings()">💾 Save & Hide</button>
+            <button class="btn" onclick="saveSettings()">💾 Save & Hide Token</button>
         </div>
 
-        <!-- Lesson Details -->
+        <!-- File Upload Area -->
         <div id="lessonBlock" style="display: none;">
-            <h3>📚 பாட விவரங்கள்</h3>
+            <h3 style="margin-top:0; color:#0d324d;">📁 பாடத்தைப் பதிவேற்றுக</h3>
             
             <div class="form-group">
-                <label>முதன்மைப் பாடம் (Main Subject):</label>
+                <label>1. முதன்மைப் பாடம் (Main Subject):</label>
                 <select id="folderName" onchange="updateSubTopics()">
                     <option value="tamil">📘 பொதுத் தமிழ்</option>
                     <option value="gk">🌍 பொது அறிவு</option>
@@ -57,30 +60,23 @@
                 </select>
             </div>
 
-            <!-- புதிதாக சேர்க்கப்பட்ட உட்தலைப்பு (Sub-topic) பகுதி -->
             <div class="form-group">
-                <label>உட்தலைப்பு (Sub Topic):</label>
+                <label>2. உட்தலைப்பு (Sub Topic):</label>
                 <select id="subTopic"></select>
             </div>
 
             <div class="form-group">
-                <label>ஆங்கிலப் பெயர் (File Name - No spaces):</label>
+                <label>3. ஆங்கிலப் பெயர் (File Name - No spaces):</label>
                 <input type="text" id="fileName" placeholder="உதா: poruthuthal" required>
             </div>
-            <div class="form-group">
-                <label>தலைப்பு (தமிழ் - உதா: 1. பொருத்துதல்):</label>
-                <input type="text" id="lessonTitle" required>
-            </div>
-            <div class="form-group">
-                <label>பாடக்குறிப்புகள் (Enter அழுத்தவும்):</label>
-                <textarea id="lessonNotes"></textarea>
+
+            <div class="upload-box">
+                <label style="color:#333;">4. JSON ஃபைலைத் தேர்ந்தெடுக்கவும்:</label>
+                <p style="font-size:13px; color:#666; margin-top:5px;">(பாடம் மற்றும் தேர்வு வினாக்கள் அடங்கிய .json ஃபைல்)</p>
+                <input type="file" id="jsonFileInput" accept=".json" required>
             </div>
 
-            <h3>✍️ தேர்வு வினாக்கள்</h3>
-            <div id="quizContainer"></div>
-            <button type="button" class="btn" onclick="addQuestion()">+ புதிய கேள்வி சேர்</button>
-
-            <button type="button" class="btn btn-success" id="uploadBtn" onclick="uploadToGitHub()">🚀 GitHub-ல் Upload செய்</button>
+            <button type="button" class="btn btn-success" id="uploadBtn" onclick="processAndUpload()">🚀 நேரடியாக GitHub-ல் Upload செய்</button>
             <div id="statusMsg" class="status"></div>
         </div>
     </div>
@@ -133,68 +129,67 @@
             }
         }
 
-        let qCount = 0;
-        function addQuestion() {
-            qCount++;
-            const html = `
-                <div class="q-box" id="q_${qCount}">
-                    <label>கேள்வி ${qCount}:</label>
-                    <input type="text" id="qtext_${qCount}" style="margin-bottom:10px;">
-                    <div style="display:flex; gap:10px; margin-bottom:10px;">
-                        <input type="text" id="opt0_${qCount}" placeholder="Opt 1">
-                        <input type="text" id="opt1_${qCount}" placeholder="Opt 2">
-                        <input type="text" id="opt2_${qCount}" placeholder="Opt 3">
-                        <input type="text" id="opt3_${qCount}" placeholder="Opt 4">
-                    </div>
-                    <label>சரியான விடை:</label>
-                    <select id="ans_${qCount}">
-                        <option value="0">Opt 1</option>
-                        <option value="1">Opt 2</option>
-                        <option value="2">Opt 3</option>
-                        <option value="3">Opt 4</option>
-                    </select>
-                </div>`;
-            document.getElementById('quizContainer').insertAdjacentHTML('beforeend', html);
-        }
+        window.onload = function() { checkSettings(); };
 
-        window.onload = function() { checkSettings(); addQuestion(); };
+        // ஃபைலின் பெயர் மாறும்போது தானாகவே File Name பெட்டியில் நிரப்ப
+        document.getElementById('jsonFileInput').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if(file) {
+                // '.json' என்பதை நீக்கிவிட்டுப் பெயரை மட்டும் எடுக்கிறோம்
+                const nameWithoutExt = file.name.replace(/\.[^/.]+$/, "");
+                document.getElementById('fileName').value = nameWithoutExt.toLowerCase().replace(/\s+/g, '_');
+            }
+        });
 
         // GitHub Base64 Encoder (Supports Tamil)
         function utf8ToBase64(str) {
             return btoa(unescape(encodeURIComponent(str)));
         }
 
-        async function uploadToGitHub() {
+        // 1. ஃபைலைப் படித்துப் சரிபார்க்கும் செயல்முறை
+        function processAndUpload() {
+            const fileInput = document.getElementById('jsonFileInput');
+            const file = fileInput.files[0];
+            const fileNameInput = document.getElementById('fileName').value.trim();
+
+            if(!fileNameInput) return alert("ஆங்கிலப் பெயரை உள்ளிடவும்!");
+            if(!file) return alert("தயவுசெய்து ஒரு JSON ஃபைலைத் தேர்ந்தெடுக்கவும்!");
+
+            const reader = new FileReader();
+            
+            reader.onload = async function(e) {
+                try {
+                    // JSON ஃபைல் சரியாக உள்ளதா என செக் செய்தல்
+                    const lessonData = JSON.parse(e.target.result);
+                    
+                    if(!lessonData.title) {
+                        alert("பிழை: நீங்கள் பதிவேற்றிய JSON ஃபைலில் 'title' (பாடத்தின் தலைப்பு) இல்லை!");
+                        return;
+                    }
+
+                    // எல்லாம் சரியாக இருந்தால் GitHub-க்கு அனுப்புதல்
+                    await uploadToGitHub(lessonData, lessonData.title, fileNameInput);
+
+                } catch (error) {
+                    alert("பிழை: நீங்கள் தேர்ந்தெடுத்தது சரியான JSON ஃபைல் அல்ல. (Syntax Error: " + error.message + ")");
+                }
+            };
+
+            reader.readAsText(file); // ஃபைலை வாசிக்கத் தொடங்குகிறோம்
+        }
+
+
+        // 2. GitHub-ல் அப்லோட் செய்யும் செயல்முறை
+        async function uploadToGitHub(lessonData, title, file) {
             const token = localStorage.getItem('ms_gh_token');
             const repo = localStorage.getItem('ms_gh_repo');
             const folder = document.getElementById('folderName').value;
             const subTopic = document.getElementById('subTopic').value;
-            const file = document.getElementById('fileName').value.trim();
-            const title = document.getElementById('lessonTitle').value.trim();
-            const notes = document.getElementById('lessonNotes').value.split('\n').filter(n => n.trim() !== "");
             const btn = document.getElementById('uploadBtn');
             const statusBox = document.getElementById('statusMsg');
 
-            if(!file || !title) return alert("ஆங்கிலப் பெயர் மற்றும் தலைப்பை உள்ளிடவும்!");
-
-            btn.innerText = "⏳ Uploading..."; btn.disabled = true;
-
-            const quiz = [];
-            for(let i=1; i<=qCount; i++) {
-                const q = document.getElementById(`qtext_${i}`);
-                if(q && q.value.trim() !== "") {
-                    quiz.push({
-                        q: q.value.trim(),
-                        options: [
-                            document.getElementById(`opt0_${i}`).value,
-                            document.getElementById(`opt1_${i}`).value,
-                            document.getElementById(`opt2_${i}`).value,
-                            document.getElementById(`opt3_${i}`).value
-                        ],
-                        ans: parseInt(document.getElementById(`ans_${i}`).value)
-                    });
-                }
-            }
+            btn.innerText = "⏳ Uploading to GitHub..."; 
+            btn.disabled = true;
 
             try {
                 // 1. மாஸ்டர் Syllabus.json ஐ அப்டேட் செய்தல்
@@ -212,7 +207,6 @@
                 if(!syllabus[folder]) syllabus[folder] = {};
                 if(!syllabus[folder][subTopic]) syllabus[folder][subTopic] = [];
                 
-                // புதிய பாடத்தை லிஸ்டில் சேர்த்தல்
                 const existingIndex = syllabus[folder][subTopic].findIndex(l => l.file === file);
                 if(existingIndex >= 0) syllabus[folder][subTopic][existingIndex].title = title;
                 else syllabus[folder][subTopic].push({ file: file, title: title });
@@ -221,21 +215,23 @@
                 if(syllabusSha) sBody.sha = syllabusSha;
                 await fetch(syllabusUrl, { method: 'PUT', headers: { "Authorization": `token ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(sBody) });
 
-                // 2. பாடத்தை (Lesson JSON) குறிப்பிட்ட ஃபோல்டரில் சேமித்தல்
+
+                // 2. பாடத்தை (Uploaded JSON) குறிப்பிட்ட ஃபோல்டரில் சேமித்தல்
                 const lessonUrl = `https://api.github.com/repos/${repo}/contents/data/${folder}/${subTopic}/${file}.json`;
                 let lessonSha = null;
                 const getLesson = await fetch(lessonUrl, { headers: { "Authorization": `token ${token}` } });
                 if(getLesson.ok) lessonSha = (await getLesson.json()).sha;
 
-                const lessonData = { title, notes, quiz };
-                const lBody = { message: `Add/Update lesson: ${title}`, content: utf8ToBase64(JSON.stringify(lessonData, null, 4)) };
+                const lBody = { message: `Add/Update lesson JSON: ${title}`, content: utf8ToBase64(JSON.stringify(lessonData, null, 4)) };
                 if(lessonSha) lBody.sha = lessonSha;
                 
                 const putLesson = await fetch(lessonUrl, { method: 'PUT', headers: { "Authorization": `token ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(lBody) });
                 
                 if(putLesson.ok) {
                     statusBox.className = "status success";
-                    statusBox.innerText = "🎉 வெற்றி! பாடம் Dashboard-ல் சேர்க்கப்பட்டுவிட்டது.";
+                    statusBox.innerText = "🎉 வெற்றி! JSON ஃபைல் வெற்றிகரமாக பதிவேற்றப்பட்டு Dashboard-ல் சேர்க்கப்பட்டது.";
+                    document.getElementById('jsonFileInput').value = '';
+                    document.getElementById('fileName').value = '';
                 } else throw new Error("Upload Failed");
 
             } catch (error) {
@@ -243,8 +239,9 @@
                 statusBox.innerText = "❌ பிழை: " + error.message;
             } finally {
                 statusBox.style.display = "block";
-                btn.innerText = "🚀 GitHub-ல் Upload செய்"; btn.disabled = false;
-                setTimeout(() => statusBox.style.display = "none", 4000);
+                btn.innerText = "🚀 நேரடியாக GitHub-ல் Upload செய்"; 
+                btn.disabled = false;
+                setTimeout(() => statusBox.style.display = "none", 5000);
             }
         }
     </script>
