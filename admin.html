@@ -8,17 +8,18 @@
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
         body { margin: 0; font-family: 'Poppins', sans-serif; background-color: #f4f7f6; color: #333; }
         .header { background-color: #0d324d; color: white; padding: 20px; text-align: center; }
-        .container { max-width: 700px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .container { max-width: 750px; margin: 40px auto; background: white; padding: 30px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
         .config-box { background: #fff3cd; padding: 20px; border-left: 5px solid #ffc107; border-radius: 5px; margin-bottom: 25px; }
         .form-group { margin-bottom: 20px; }
-        label { display: block; font-weight: 600; margin-bottom: 8px; color: #0056b3; }
+        label { display: block; font-weight: 600; margin-bottom: 8px; color: #0056b3; font-size: 14px; }
         input[type="text"], input[type="password"], select, input[type="file"] { width: 100%; padding: 12px; border: 1px solid #ccc; border-radius: 6px; box-sizing: border-box; font-size: 15px; }
         
         .upload-box { background: #f9fbff; padding: 20px; border: 2px dashed #0056b3; border-radius: 8px; text-align: center; margin-bottom: 20px; }
-        .upload-box input[type="file"] { margin-top: 10px; padding: 10px; background: white; cursor: pointer; }
+        .upload-box input[type="file"] { margin-top: 10px; padding: 10px; background: white; cursor: pointer; border: 1px solid #ccc; border-radius: 5px; width: 90%; }
         
         .btn { background: #0056b3; color: white; border: none; padding: 12px 20px; border-radius: 5px; cursor: pointer; font-weight: 600; }
-        .btn-success { background: #28a745; width: 100%; padding: 15px; font-size: 18px; margin-top: 10px; }
+        .btn-success { background: #28a745; width: 100%; padding: 15px; font-size: 18px; margin-top: 10px; transition: 0.3s; }
+        .btn-success:hover { background: #218838; }
         .status { margin-top: 20px; font-weight: bold; text-align: center; padding: 15px; border-radius: 5px; display: none; }
         .status.success { background: #d4edda; color: #155724; border: 1px solid #c3e6cb; }
         .status.error { background: #f8d7da; color: #721c24; border: 1px solid #f5c6cb; }
@@ -27,8 +28,8 @@
 <body>
 
     <div class="header">
-        <h1>MISSION SUCCESS - SUPER ADMIN</h1>
-        <p style="margin: 0;">(JSON File Upload Mode)</p>
+        <h1 style="margin: 0;">MISSION SUCCESS - SUPER ADMIN</h1>
+        <p style="margin: 5px 0 0 0; font-size: 14px;">(JSON File Auto-Upload System)</p>
     </div>
 
     <div class="container">
@@ -42,21 +43,21 @@
             </div>
             <div class="form-group">
                 <label>Repository Name:</label>
-                <input type="text" id="ghRepoInput" placeholder="username/repository">
+                <input type="text" id="ghRepoInput" placeholder="உதா: muthukannan0510/mission-sucess">
             </div>
             <button class="btn" onclick="saveSettings()">💾 Save & Hide Token</button>
         </div>
 
         <!-- File Upload Area -->
         <div id="lessonBlock" style="display: none;">
-            <h3 style="margin-top:0; color:#0d324d;">📁 பாடத்தைப் பதிவேற்றுக</h3>
+            <h3 style="margin-top:0; color:#0d324d; border-bottom: 2px solid #e0e0e0; padding-bottom: 10px;">📁 புதிய பாடத்தைப் பதிவேற்றுக</h3>
             
             <div class="form-group">
                 <label>1. முதன்மைப் பாடம் (Main Subject):</label>
                 <select id="folderName" onchange="updateSubTopics()">
-                    <option value="tamil">📘 பொதுத் தமிழ்</option>
-                    <option value="gk">🌍 பொது அறிவு</option>
-                    <option value="maths">🧠 திறனறிதல் (Maths)</option>
+                    <option value="tamil">📘 பகுதி இ: தமிழ் தகுதி மற்றும் மதிப்பீட்டுத் தேர்வு</option>
+                    <option value="gk">🌍 பகுதி அ: பொது அறிவு</option>
+                    <option value="maths">🧠 பகுதி ஆ: திறனறிவு மற்றும் நுண்ணறிவு</option>
                 </select>
             </div>
 
@@ -67,12 +68,12 @@
 
             <div class="form-group">
                 <label>3. ஆங்கிலப் பெயர் (File Name - No spaces):</label>
-                <input type="text" id="fileName" placeholder="உதா: poruthuthal" required>
+                <input type="text" id="fileName" placeholder="உதா: poruthuthal_1" required>
             </div>
 
             <div class="upload-box">
-                <label style="color:#333;">4. JSON ஃபைலைத் தேர்ந்தெடுக்கவும்:</label>
-                <p style="font-size:13px; color:#666; margin-top:5px;">(பாடம் மற்றும் தேர்வு வினாக்கள் அடங்கிய .json ஃபைல்)</p>
+                <label style="color:#333; font-size: 16px;">4. JSON ஃபைலைத் தேர்ந்தெடுக்கவும்:</label>
+                <p style="font-size:13px; color:#666; margin-top:5px;">(பாடக்குறிப்பு மற்றும் தேர்வு வினாக்கள் அடங்கிய .json ஃபைல்)</p>
                 <input type="file" id="jsonFileInput" accept=".json" required>
             </div>
 
@@ -82,19 +83,28 @@
     </div>
 
     <script>
+        // TNPSC Group 4 அதிகாரப்பூர்வ பாடத்திட்டம்
         const subTopicMap = {
             tamil: [
-                {id: 'ilakkanam', name: 'பகுதி அ: இலக்கணம்'},
-                {id: 'ilakkiyam', name: 'பகுதி ஆ: இலக்கியம்'},
-                {id: 'arignargal', name: 'பகுதி இ: தமிழ் அறிஞர்கள்'}
+                {id: 'ilakkanam', name: 'அலகு I: இலக்கணம்'},
+                {id: 'sollagarathi', name: 'அலகு II: சொல்லகராதி'},
+                {id: 'eluthuthiran', name: 'அலகு III: எழுதும் திறன்'},
+                {id: 'kalaisorkal', name: 'அலகு IV: கலைச் சொற்கள்'},
+                {id: 'vasithal', name: 'அலகு V: வாசித்தல் - புரிந்து கொள்ளும் திறன்'},
+                {id: 'molipeyarppu', name: 'அலகு VI: எளிய மொழி பெயர்ப்பு'},
+                {id: 'ilakkiyam', name: 'அலகு VII: இலக்கியம், தமிழ் அறிஞர்களும், தமிழ்த்தொண்டும்'}
             ],
             gk: [
-                {id: 'science', name: 'அறிவியல்'},
-                {id: 'history', name: 'வரலாறு மற்றும் பண்பாடு'},
-                {id: 'polity', name: 'ஆட்சியியல் மற்றும் பொருளாதாரம்'}
+                {id: 'science', name: 'அலகு I: பொது அறிவியல்'},
+                {id: 'geography', name: 'அலகு II: புவியியல்'},
+                {id: 'history', name: 'அலகு III: இந்தியாவின் வரலாறு, பண்பாடு மற்றும் இந்திய தேசிய இயக்கம்'},
+                {id: 'polity', name: 'அலகு IV: இந்திய ஆட்சியியல்'},
+                {id: 'economy', name: 'அலகு V: இந்தியப் பொருளாதாரம் மற்றும் தமிழ்நாட்டில் வளர்ச்சி நிர்வாகம்'},
+                {id: 'tn_history', name: 'அலகு VI: தமிழ்நாட்டின் வரலாறு, பண்பாடு, மரபு மற்றும் சமூக - அரசியல் இயக்கங்கள்'}
             ],
             maths: [
-                {id: 'maths', name: 'திறனறிதல் (Maths)'}
+                {id: 'aptitude', name: 'அலகு I: திறனறிவு'},
+                {id: 'reasoning', name: 'அலகு II: காரணவியல்'}
             ]
         };
 
@@ -135,7 +145,6 @@
         document.getElementById('jsonFileInput').addEventListener('change', function(e) {
             const file = e.target.files[0];
             if(file) {
-                // '.json' என்பதை நீக்கிவிட்டுப் பெயரை மட்டும் எடுக்கிறோம்
                 const nameWithoutExt = file.name.replace(/\.[^/.]+$/, "");
                 document.getElementById('fileName').value = nameWithoutExt.toLowerCase().replace(/\s+/g, '_');
             }
@@ -159,7 +168,6 @@
             
             reader.onload = async function(e) {
                 try {
-                    // JSON ஃபைல் சரியாக உள்ளதா என செக் செய்தல்
                     const lessonData = JSON.parse(e.target.result);
                     
                     if(!lessonData.title) {
@@ -167,7 +175,6 @@
                         return;
                     }
 
-                    // எல்லாம் சரியாக இருந்தால் GitHub-க்கு அனுப்புதல்
                     await uploadToGitHub(lessonData, lessonData.title, fileNameInput);
 
                 } catch (error) {
@@ -175,9 +182,8 @@
                 }
             };
 
-            reader.readAsText(file); // ஃபைலை வாசிக்கத் தொடங்குகிறோம்
+            reader.readAsText(file);
         }
-
 
         // 2. GitHub-ல் அப்லோட் செய்யும் செயல்முறை
         async function uploadToGitHub(lessonData, title, file) {
@@ -215,7 +221,6 @@
                 if(syllabusSha) sBody.sha = syllabusSha;
                 await fetch(syllabusUrl, { method: 'PUT', headers: { "Authorization": `token ${token}`, "Content-Type": "application/json" }, body: JSON.stringify(sBody) });
 
-
                 // 2. பாடத்தை (Uploaded JSON) குறிப்பிட்ட ஃபோல்டரில் சேமித்தல்
                 const lessonUrl = `https://api.github.com/repos/${repo}/contents/data/${folder}/${subTopic}/${file}.json`;
                 let lessonSha = null;
@@ -241,6 +246,7 @@
                 statusBox.style.display = "block";
                 btn.innerText = "🚀 நேரடியாக GitHub-ல் Upload செய்"; 
                 btn.disabled = false;
+                
                 setTimeout(() => statusBox.style.display = "none", 5000);
             }
         }
