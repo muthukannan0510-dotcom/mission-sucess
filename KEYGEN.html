@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MISSION SUCCESS - KEYGEN</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        .keygen-container {
+            background-color: #ffffff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.1);
+            text-align: center;
+            width: 100%;
+            max-width: 400px;
+            border-top: 5px solid #0d324d;
+        }
+
+        h1 {
+            color: #0d324d;
+            font-size: 24px;
+            font-weight: 700;
+            margin-bottom: 5px;
+            letter-spacing: 1.5px;
+        }
+
+        p {
+            color: #555;
+            font-size: 14px;
+            margin-bottom: 25px;
+        }
+
+        .input-box {
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            text-align: center;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        .input-box:focus {
+            border-color: #0d324d;
+        }
+
+        .generate-btn {
+            background-color: #0d324d;
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            transition: 0.3s;
+        }
+
+        .generate-btn:hover {
+            background-color: #082133;
+        }
+
+        .result-box {
+            margin-top: 25px;
+            padding: 15px;
+            background-color: #eef2f5;
+            border-radius: 6px;
+            display: none; /* Initially hidden */
+        }
+
+        .result-title {
+            font-size: 12px;
+            color: #666;
+            text-transform: uppercase;
+            font-weight: 600;
+        }
+
+        .password-display {
+            font-size: 28px;
+            color: #d93025;
+            font-weight: 700;
+            letter-spacing: 3px;
+            margin-top: 5px;
+        }
+
+        .error-text {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="keygen-container">
+        <h1>MISSION SUCCESS</h1>
+        <p>Admin Password Generator Tool</p>
+
+        <input type="text" id="mobileInput" class="input-box" placeholder="Enter 10-Digit Mobile No" maxlength="10">
+        
+        <button class="generate-btn" onclick="generatePassword()">GENERATE PASSWORD</button>
+
+        <div id="errorMsg" class="error-text">Please enter a valid 10-digit number.</div>
+
+        <div id="resultBox" class="result-box">
+            <div class="result-title">Generated 6-Digit Password</div>
+            <div id="passwordDisplay" class="password-display">------</div>
+        </div>
+    </div>
+
+    <script>
+        // Enkal (Numbers) mattume type seiya allow seigirathu
+        document.getElementById("mobileInput").addEventListener("input", function() {
+            this.value = this.value.replace(/[^0-9]/g, '');
+        });
+
+        function generatePassword() {
+            const mobile = document.getElementById("mobileInput").value;
+            const errorMsg = document.getElementById("errorMsg");
+            const resultBox = document.getElementById("resultBox");
+            const passwordDisplay = document.getElementById("passwordDisplay");
+
+            // Validation: 10 digits irukkirathaa endru check seithal
+            if (mobile.length !== 10) {
+                errorMsg.style.display = "block";
+                resultBox.style.display = "none";
+                return;
+            }
+
+            errorMsg.style.display = "none";
+
+            // --- 6-Digit Secret Math Logic ---
+            const part1 = parseInt(mobile.substring(0, 5));
+            const part2 = parseInt(mobile.substring(5, 10));
+            
+            const calculation = (part1 * 13) + (part2 * 7) + 123456;
+            const sixDigitKey = (calculation % 900000) + 100000; 
+
+            // Result-ai thiraiyil kaattuthal
+            passwordDisplay.textContent = sixDigitKey;
+            resultBox.style.display = "block";
+        }
+    </script>
+
+</body>
+</html>

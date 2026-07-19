@@ -1,0 +1,273 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - MISSION SUCCESS ACADEMY</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+        }
+
+        .header {
+            background-color: #0056b3; 
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .header h1 {
+            margin: 0;
+            font-size: 24px;
+            letter-spacing: 1px;
+            font-weight: 600;
+        }
+
+        .container {
+            max-width: 700px;
+            margin: 40px auto;
+            padding: 0 20px;
+            padding-bottom: 50px;
+        }
+
+        .course-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            text-align: center;
+            cursor: pointer;
+            border: 2px solid #0056b3;
+            transition: 0.3s;
+        }
+
+        .course-card h2 { color: #0056b3; margin: 0; font-size: 22px; }
+        .course-card p { color: #666; font-size: 14px; margin-top: 5px; }
+
+        .hidden-content { display: none; }
+
+        .subject-box {
+            margin-top: 20px;
+            background: #eef2f5;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 5px solid #0056b3;
+        }
+
+        .subject-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 15px;
+            margin-top: 10px;
+            font-size: 16px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+
+        .unit-box { margin-left: 15px; margin-right: 5px; margin-top: 5px; }
+
+        .unit-btn {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            width: 100%;
+            background-color: #ffffff;
+            color: #333;
+            border: 1px solid #ccc;
+            padding: 12px 15px;
+            margin-top: 8px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .unit-btn:hover { background-color: #f0f8ff; color: #0056b3; }
+
+        .lesson-list {
+            background-color: #ffffff;
+            border: 1px solid #ddd;
+            border-top: none;
+            border-radius: 0 0 5px 5px;
+            padding: 5px 0;
+            margin-left: 15px;
+            margin-right: 5px;
+        }
+
+        .lesson-item { border-bottom: 1px solid #f4f4f4; }
+        .lesson-item:last-child { border-bottom: none; }
+
+        .lesson-title {
+            padding: 12px 20px;
+            color: #444;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .lesson-title:hover { background-color: #e6f2ff; color: #0056b3; padding-left: 25px; transition: 0.2s; }
+
+        .action-box {
+            background-color: #fafafa;
+            padding: 12px 20px;
+            border-top: 1px dashed #ddd;
+            display: none; 
+            gap: 15px;
+        }
+
+        .action-btn {
+            flex: 1;
+            padding: 10px;
+            text-align: center;
+            border-radius: 5px;
+            font-size: 14px;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn-notes { background-color: #e8f5e9; color: #2e7d32; border: 1px solid #c8e6c9; }
+        .btn-notes:hover { background-color: #c8e6c9; }
+
+        .btn-test { background-color: #e3f2fd; color: #1565c0; border: 1px solid #bbdefb; }
+        .btn-test:hover { background-color: #bbdefb; }
+
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>MISSION SUCCESS ACADEMY</h1>
+    </div>
+
+    <div class="container">
+        
+        <div class="course-card" onclick="toggleMenu('tnpsc-dashboard')">
+            <h2>TNPSC Group 4</h2>
+            <p>பாடத்திட்டங்களைப் பார்க்க இங்கே கிளிக் செய்யவும் ▼</p>
+        </div>
+
+        <div id="tnpsc-dashboard" class="hidden-content subject-box">
+            
+            <!-- ================== 1. பொதுத் தமிழ் ================== -->
+            <button class="subject-btn" onclick="toggleMenu('tamil-units')">
+                <span>📘 பொதுத் தமிழ்</span> <span>+</span>
+            </button>
+            <div id="tamil-units" class="hidden-content unit-box">
+                
+                <!-- இலக்கணம் -->
+                <button class="unit-btn" onclick="toggleMenu('tamil-a')">பகுதி அ: இலக்கணம் <span>+</span></button>
+                <div id="tamil-a" class="hidden-content lesson-list">
+                    
+                    <!-- பாடம் 1: பொருத்துதல் (data/tamil/poruthuthal.json) -->
+                    <div class="lesson-item">
+                        <div class="lesson-title" onclick="toggleAction(this)">1. பொருத்துதல் - பொருத்தமான பொருளை அறிதல் <span>▼</span></div>
+                        <div class="action-box">
+                            <a href="notes.html?folder=tamil&file=poruthuthal" class="action-btn btn-notes">📖 பாடக்குறிப்பு</a>
+                            <a href="test.html?folder=tamil&file=poruthuthal" class="action-btn btn-test">✍️ தேர்வு</a>
+                        </div>
+                    </div>
+                    
+                    <!-- பாடம் 2: பிரித்தெழுதுதல் (data/tamil/piriththeluthuthal.json) -->
+                    <div class="lesson-item">
+                        <div class="lesson-title" onclick="toggleAction(this)">2. பிரித்தெழுதுதல் / சேர்த்தெழுதுதல் <span>▼</span></div>
+                        <div class="action-box">
+                            <a href="notes.html?folder=tamil&file=piriththeluthuthal" class="action-btn btn-notes">📖 பாடக்குறிப்பு</a>
+                            <a href="test.html?folder=tamil&file=piriththeluthuthal" class="action-btn btn-test">✍️ தேர்வு</a>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!-- இலக்கியம் -->
+                <button class="unit-btn" onclick="toggleMenu('tamil-b')">பகுதி ஆ: இலக்கியம் <span>+</span></button>
+                <div id="tamil-b" class="hidden-content lesson-list">
+                    <!-- பாடம் 1: திருக்குறள் (data/tamil/thirukkural.json) -->
+                    <div class="lesson-item">
+                        <div class="lesson-title" onclick="toggleAction(this)">1. திருக்குறள் <span>▼</span></div>
+                        <div class="action-box">
+                            <a href="notes.html?folder=tamil&file=thirukkural" class="action-btn btn-notes">📖 பாடக்குறிப்பு</a>
+                            <a href="test.html?folder=tamil&file=thirukkural" class="action-btn btn-test">✍️ தேர்வு</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ================== 2. பொது அறிவு ================== -->
+            <button class="subject-btn" onclick="toggleMenu('gk-units')" style="background-color: #0077b6;">
+                <span>🌍 பொது அறிவு</span> <span>+</span>
+            </button>
+            <div id="gk-units" class="hidden-content unit-box">
+                <button class="unit-btn" onclick="toggleMenu('gk-1')">அறிவியல் மற்றும் வரலாறு <span>+</span></button>
+                <div id="gk-1" class="hidden-content lesson-list">
+                    
+                    <!-- பாடம் 1: சிந்து சமவெளி (data/gk/sindhu_samaveli.json) -->
+                    <div class="lesson-item">
+                        <div class="lesson-title" onclick="toggleAction(this)">1. சிந்து சமவெளி நாகரிகம் <span>▼</span></div>
+                        <div class="action-box">
+                            <a href="notes.html?folder=gk&file=sindhu_samaveli" class="action-btn btn-notes">📖 பாடக்குறிப்பு</a>
+                            <a href="test.html?folder=gk&file=sindhu_samaveli" class="action-btn btn-test">✍️ தேர்வு</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- ================== 3. திறனறிதல் ================== -->
+            <button class="subject-btn" onclick="toggleMenu('maths-units')" style="background-color: #0096c7;">
+                <span>🧠 திறனறிதல் (Maths)</span> <span>+</span>
+            </button>
+            <div id="maths-units" class="hidden-content unit-box">
+                <div class="lesson-list" style="display: block; border-top: 1px solid #ddd; margin-left: 0; margin-right: 0; border-radius: 5px;">
+                    
+                    <!-- பாடம் 1: சுருக்குதல் (data/maths/surukkuthal.json) -->
+                    <div class="lesson-item">
+                        <div class="lesson-title" onclick="toggleAction(this)">1. சுருக்குதல் (Simplification) <span>▼</span></div>
+                        <div class="action-box">
+                            <a href="notes.html?folder=maths&file=surukkuthal" class="action-btn btn-notes">📖 பாடக்குறிப்பு</a>
+                            <a href="test.html?folder=maths&file=surukkuthal" class="action-btn btn-test">✍️ தேர்வு</a>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+        function toggleMenu(elementId) {
+            const content = document.getElementById(elementId);
+            if (content.style.display === "block") {
+                content.style.display = "none";
+            } else {
+                content.style.display = "block";
+            }
+        }
+
+        function toggleAction(element) {
+            const actionBox = element.nextElementSibling;
+            if (actionBox.style.display === "flex") {
+                actionBox.style.display = "none";
+            } else {
+                actionBox.style.display = "flex";
+            }
+        }
+    </script>
+
+</body>
+</html>

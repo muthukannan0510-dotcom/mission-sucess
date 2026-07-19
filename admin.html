@@ -1,0 +1,266 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Panel - MISSION SUCCESS ACADEMY</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            background-color: #f4f7f6;
+            color: #333;
+        }
+
+        .header {
+            background-color: #0d324d; 
+            color: white;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        .container {
+            max-width: 800px;
+            margin: 30px auto;
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-weight: 600;
+            margin-bottom: 8px;
+            color: #0056b3;
+        }
+
+        input[type="text"], textarea, select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 6px;
+            font-size: 14px;
+            font-family: inherit;
+        }
+
+        textarea {
+            resize: vertical;
+            height: 120px;
+        }
+
+        .question-box {
+            background: #f9f9f9;
+            padding: 20px;
+            border: 1px dashed #0056b3;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .btn {
+            background-color: #0056b3;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            font-size: 15px;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .btn:hover {
+            background-color: #004494;
+        }
+
+        .btn-success {
+            background-color: #28a745;
+            width: 100%;
+            padding: 15px;
+            font-size: 18px;
+            margin-top: 20px;
+        }
+        
+        .btn-success:hover {
+            background-color: #218838;
+        }
+
+        .output-box {
+            margin-top: 30px;
+            display: none;
+        }
+
+        .output-box textarea {
+            height: 200px;
+            background: #282c34;
+            color: #61dafb;
+            font-family: monospace;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="header">
+        <h1>MISSION SUCCESS - ADMIN PANEL</h1>
+        <p>புதிய பாடம் மற்றும் தேர்வுகளை உருவாக்க (JSON Generator)</p>
+    </div>
+
+    <div class="container">
+        <!-- 1. பாடத்தின் அடிப்படை விவரங்கள் -->
+        <div class="form-group">
+            <label>Topic ID (ஆங்கிலத்தில் சிறிய எழுத்துக்களில், இடைவெளி இன்றி. உதா: thirukkural)</label>
+            <input type="text" id="topicId" placeholder="e.g., thirukkural" required>
+        </div>
+
+        <div class="form-group">
+            <label>பாடத்தின் தலைப்பு (Lesson Title)</label>
+            <input type="text" id="lessonTitle" placeholder="உதா: 1. திருக்குறள் - பொருட்பால்" required>
+        </div>
+
+        <div class="form-group">
+            <label>பாடக்குறிப்புகள் (Notes - ஒவ்வொரு பத்திக்கும் Enter அழுத்தவும்)</label>
+            <textarea id="lessonNotes" placeholder="பாடக்குறிப்புகளை இங்கே தட்டச்சு செய்யவும்..."></textarea>
+        </div>
+
+        <hr style="margin: 30px 0; border-top: 1px solid #ddd;">
+
+        <!-- 2. தேர்வு வினாக்கள் (Questions) -->
+        <h3 style="color: #0056b3;">தேர்வு வினாக்களைச் சேர்க்க (Add Quiz Questions)</h3>
+        
+        <div id="questionsContainer">
+            <!-- Questions will be added here dynamically -->
+        </div>
+
+        <button type="button" class="btn" onclick="addQuestion()">+ புதிய கேள்வி சேர்</button>
+
+        <!-- 3. Generate பட்டன் -->
+        <button type="button" class="btn btn-success" onclick="generateJSON()">Generate JSON Code</button>
+
+        <!-- 4. Output Area -->
+        <div class="output-box" id="outputSection">
+            <label>உருவாக்கப்பட்ட JSON குறியீடு (இதைக் காப்பி செய்து study_material.html-ல் Paste செய்யவும்):</label>
+            <textarea id="jsonOutput" readonly></textarea>
+        </div>
+
+    </div>
+
+    <script>
+        let questionCount = 0;
+
+        // புதிய கேள்விகளைச் சேர்க்கும் Function
+        function addQuestion() {
+            questionCount++;
+            const container = document.getElementById("questionsContainer");
+            
+            const questionHTML = `
+                <div class="question-box" id="qBox_${questionCount}">
+                    <div class="form-group">
+                        <label>கேள்வி ${questionCount}:</label>
+                        <input type="text" id="q_${questionCount}" placeholder="கேள்வியை உள்ளிடவும்..." required>
+                    </div>
+                    <div style="display: flex; gap: 10px; flex-wrap: wrap;">
+                        <div style="flex: 1; min-width: 200px;">
+                            <label>Option 1 (Index 0):</label>
+                            <input type="text" id="q_${questionCount}_opt0" required>
+                        </div>
+                        <div style="flex: 1; min-width: 200px;">
+                            <label>Option 2 (Index 1):</label>
+                            <input type="text" id="q_${questionCount}_opt1" required>
+                        </div>
+                        <div style="flex: 1; min-width: 200px;">
+                            <label>Option 3 (Index 2):</label>
+                            <input type="text" id="q_${questionCount}_opt2" required>
+                        </div>
+                        <div style="flex: 1; min-width: 200px;">
+                            <label>Option 4 (Index 3):</label>
+                            <input type="text" id="q_${questionCount}_opt3" required>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-top: 15px;">
+                        <label style="color: #d93025;">சரியான விடையைத் தேர்ந்தெடுக்கவும் (Correct Answer):</label>
+                        <select id="q_${questionCount}_ans">
+                            <option value="0">Option 1 (Index 0)</option>
+                            <option value="1">Option 2 (Index 1)</option>
+                            <option value="2">Option 3 (Index 2)</option>
+                            <option value="3">Option 4 (Index 3)</option>
+                        </select>
+                    </div>
+                </div>
+            `;
+            container.insertAdjacentHTML('beforeend', questionHTML);
+        }
+
+        // முதல் கேள்வியை தானாகவே திரையில் காட்ட
+        window.onload = function() {
+            addQuestion();
+        };
+
+        // JSON உருவாக்குதல்
+        function generateJSON() {
+            const topicId = document.getElementById("topicId").value.trim();
+            const title = document.getElementById("lessonTitle").value.trim();
+            const notesText = document.getElementById("lessonNotes").value;
+            
+            if(!topicId || !title) {
+                alert("தயவுசெய்து Topic ID மற்றும் தலைப்பை உள்ளிடவும்!");
+                return;
+            }
+
+            // Notes-ஐ தனித்தனி வரிகளாகப் பிரித்தல்
+            const notesArray = notesText.split('\n').filter(note => note.trim() !== "");
+
+            // கேள்விகளைத் தொகுத்தல்
+            const quizArray = [];
+            for(let i = 1; i <= questionCount; i++) {
+                const qText = document.getElementById(`q_${i}`);
+                if(qText && qText.value.trim() !== "") {
+                    const opt0 = document.getElementById(`q_${i}_opt0`).value.trim();
+                    const opt1 = document.getElementById(`q_${i}_opt1`).value.trim();
+                    const opt2 = document.getElementById(`q_${i}_opt2`).value.trim();
+                    const opt3 = document.getElementById(`q_${i}_opt3`).value.trim();
+                    const ans = parseInt(document.getElementById(`q_${i}_ans`).value);
+
+                    quizArray.push({
+                        "q": qText.value.trim(),
+                        "options": [opt0, opt1, opt2, opt3],
+                        "ans": ans
+                    });
+                }
+            }
+
+            // JSON கட்டமைப்பை உருவாக்குதல்
+            const finalData = {
+                [topicId]: {
+                    "title": title,
+                    "notes": notesArray,
+                    "quiz": quizArray
+                }
+            };
+
+            // Output-ஐ திரையில் காட்டுதல்
+            const outputSection = document.getElementById("outputSection");
+            const jsonOutput = document.getElementById("jsonOutput");
+            
+            // Format JSON with 4 spaces for readability
+            let formattedJSON = JSON.stringify(finalData, null, 4);
+            
+            // கமா (,) சேர்ப்பதற்கு வசதியாக ஆரம்ப மற்றும் இறுதி பிராக்கெட்டுகளை நீக்கித் தர
+            formattedJSON = formattedJSON.slice(1, -2); 
+
+            jsonOutput.value = formattedJSON + ",";
+            outputSection.style.display = "block";
+            
+            // திரையை கீழே நகர்த்தல்
+            window.scrollTo(0, document.body.scrollHeight);
+        }
+    </script>
+</body>
+</html>

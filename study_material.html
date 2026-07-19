@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <title>Learn & Test</title>
+    <!-- CSS வடிவமைப்புகள் முந்தைய பதிலில் இருந்ததை இங்கும் பயன்படுத்தவும் -->
+</head>
+<body>
+    <div class="container">
+        <h2 id="title">Loading...</h2>
+        <div id="content">
+            <div id="notes"></div>
+            <button onclick="showQuiz()" class="btn">தேர்வு எழுதுக</button>
+        </div>
+        <div id="quiz" style="display:none;"></div>
+    </div>
+
+    <script>
+        // இங்கே JSON தரவுகளை இணைக்க வேண்டும்
+        const data = {
+            "poruthuthal": {
+                "title": "பொருத்துதல் - பொருத்தமான பொருளை அறிதல்",
+                "notes": ["திங்கள் - நிலவு", "ஞாயிறு - சூரியன்"],
+                "quiz": [
+                    {"q": "திங்கள் என்பதன் பொருள்?", "options": ["நிலவு", "சூரியன்"], "ans": 0}
+                ]
+            }
+        };
+
+        const params = new URLSearchParams(window.location.search);
+        const topic = params.get('topic');
+        const lesson = data[topic];
+
+        document.getElementById('title').innerText = lesson.title;
+        document.getElementById('notes').innerHTML = lesson.notes.map(n => `<p>${n}</p>`).join('');
+
+        function showQuiz() {
+            document.getElementById('content').style.display = 'none';
+            let qHtml = lesson.quiz.map((q, i) => `<div>${q.q}<br>${q.options.map((o, j) => `<input type='radio' name='q${i}' value='${j}'>${o}`).join('<br>')}</div>`).join('');
+            document.getElementById('quiz').innerHTML = qHtml + `<button onclick="check()">Submit</button>`;
+            document.getElementById('quiz').style.display = 'block';
+        }
+        
+        function check() { alert("தேர்வு முடிந்தது!"); }
+    </script>
+</body>
+</html>

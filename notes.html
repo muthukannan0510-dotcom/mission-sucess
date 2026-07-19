@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <title>பாடக்குறிப்பு - MISSION SUCCESS ACADEMY</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        body { font-family: 'Poppins', sans-serif; background-color: #f4f7f6; margin: 0; color: #333; }
+        .header { background-color: #0056b3; color: white; padding: 20px; text-align: center; }
+        .container { max-width: 800px; margin: 40px auto; background: white; padding: 40px; border-radius: 10px; }
+        h2 { color: #0056b3; border-bottom: 2px solid #e0e0e0; padding-bottom: 15px; margin-top: 0; }
+        .notes-content p { background-color: #eef2f5; padding: 18px; border-left: 5px solid #0056b3; border-radius: 6px; margin-bottom: 15px; line-height: 1.8; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MISSION SUCCESS ACADEMY</h1>
+        <p>பாடக்குறிப்புகள்</p>
+    </div>
+    <div class="container">
+        <h2 id="title">Loading Notes...</h2>
+        <div id="notes" class="notes-content"></div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const folder = params.get('folder');
+        const file = params.get('file');
+
+        if(folder && file) {
+            // குறிப்பிட்ட ஃபோல்டரில் உள்ள JSON ஃபைலை Fetch மூலம் அழைத்தல்
+            fetch(`data/${folder}/${file}.json`)
+                .then(response => {
+                    if(!response.ok) throw new Error("பாடம் கிடைக்கவில்லை");
+                    return response.json();
+                })
+                .then(lesson => {
+                    document.getElementById('title').innerText = lesson.title;
+                    document.getElementById('notes').innerHTML = lesson.notes.map(n => `<p>${n}</p>`).join('');
+                })
+                .catch(error => {
+                    document.getElementById('title').innerText = "பாடம் இன்னும் பதிவேற்றப்படவில்லை!";
+                    console.error(error);
+                });
+        }
+    </script>
+</body>
+</html>

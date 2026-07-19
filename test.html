@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ta">
+<head>
+    <meta charset="UTF-8">
+    <title>தேர்வு - MISSION SUCCESS ACADEMY</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+        body { font-family: 'Poppins', sans-serif; background-color: #f0f4f8; margin: 0; color: #333; }
+        .header { background-color: #0d324d; color: white; padding: 20px; text-align: center; }
+        .container { max-width: 750px; margin: 40px auto; padding: 0 20px; }
+        h2 { color: #0d324d; background: white; padding: 20px; border-radius: 10px; text-align: center; margin-top: 0; }
+        .q-card { background: white; padding: 25px; border-radius: 10px; margin-bottom: 25px; border-top: 4px solid #0056b3; }
+        .q-text { font-size: 18px; font-weight: 600; margin-bottom: 15px; }
+        .opt-label { display: block; background: #f9fbff; padding: 15px; margin-bottom: 10px; border: 1px solid #d1e3f8; border-radius: 8px; cursor: pointer; }
+        .opt-label input { margin-right: 12px; }
+        .btn-submit { display: block; width: 100%; background-color: #28a745; color: white; border: none; padding: 15px; font-size: 18px; border-radius: 8px; cursor: pointer; margin-top: 20px; margin-bottom: 50px; }
+        .result-box { display: none; background: #d4edda; color: #155724; padding: 30px; border-radius: 10px; text-align: center; border: 2px solid #c3e6cb; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>MISSION SUCCESS ACADEMY</h1>
+        <p>பயிற்சித் தேர்வு</p>
+    </div>
+    <div class="container">
+        <h2 id="title">Loading Test...</h2>
+        <div id="quizContainer"></div>
+        <button id="submitBtn" class="btn-submit" onclick="submitTest()" style="display:none;">தேர்வைச் சமர்ப்பி</button>
+        <div id="resultBox" class="result-box"></div>
+    </div>
+
+    <script>
+        const params = new URLSearchParams(window.location.search);
+        const folder = params.get('folder');
+        const file = params.get('file');
+        let currentQuiz = [];
+
+        if(folder && file) {
+            fetch(`data/${folder}/${file}.json`)
+                .then(res => {
+                    if(!res.ok) throw new Error("தேர்வு கிடைக்கவில்லை");
+                    return res.json();
+                })
+                .then(lesson => {
+                    document.getElementById('title').innerText = lesson.title;
+                    currentQuiz = lesson.quiz;
+                    
+                    let qHtml = "";
+                    currentQuiz.forEach((q, i) => {
+                        qHtml += `
+                        <div class="q-card">
+                            <div class="q-text">${i + 1}. ${q.q}</div>
+                            ${q.options.map((opt, j) => `
+                                <label class="opt-label">
+                                    <input type="radio" name="q${i}" value="${j}"> ${opt}
+                                </label>
+                            `).join('')}
+                        </div>`;
+                    });
+                    
+                    document.getElementById('quizContainer').innerHTML = qHtml;
+                    document.getElementById('submitBtn').style.display = "block";
+                })
+                .catch(error => {
+                    document.getElementById('title').innerText = "தேர்வு இன்னும் பதிவேற்றப்படவில்லை!";
+                });
+        }
+
+        function submitTest() {
+            let score = 0;
+            currentQuiz.forEach((q, i) => {
+                const selected = document.querySelector(`input[name="q${i}"]:checked`);
+                if(selected && parseInt(selected.value) === q.ans) score++;
+            });
+
+            document.getElementById('quizContainer').style.display = "none";
+            document.getElementById('submitBtn').style.display = "none";
+            
+            const resultBox = document.getElementById('resultBox');
+            resultBox.style.display = "block";
+            resultBox.innerHTML = `<h3>🎉 வாழ்த்துகள்!</h3><p>மதிப்பெண்கள்: <strong>${score} / ${currentQuiz.length}</strong></p>`;
+            window.scrollTo(0, 0);
+        }
+    </script>
+</body>
+</html>
