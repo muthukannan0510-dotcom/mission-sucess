@@ -2,21 +2,24 @@
 <html lang="ta">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>பாடக்குறிப்பு - MISSION SUCCESS ACADEMY</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
         body { font-family: 'Poppins', sans-serif; background-color: #f4f7f6; margin: 0; color: #333; }
-        .header { background-color: #0056b3; color: white; padding: 20px; text-align: center; }
-        .container { max-width: 800px; margin: 40px auto; background: white; padding: 40px; border-radius: 10px; }
-        h2 { color: #0056b3; border-bottom: 2px solid #e0e0e0; padding-bottom: 15px; margin-top: 0; }
+        .header { background-color: #0056b3; color: white; padding: 20px; text-align: center; box-shadow: 0 4px 6px rgba(0,0,0,0.1); }
+        .container { max-width: 800px; margin: 40px auto; background: white; padding: 40px; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); }
+        h2 { color: #0056b3; border-bottom: 2px solid #e0e0e0; padding-bottom: 15px; margin-top: 0; font-size: 22px; line-height: 1.5; }
         .notes-content p { background-color: #eef2f5; padding: 18px; border-left: 5px solid #0056b3; border-radius: 6px; margin-bottom: 15px; line-height: 1.8; font-size: 16px; }
     </style>
 </head>
 <body>
+
     <div class="header">
-        <h1>MISSION SUCCESS ACADEMY</h1>
-        <p>பாடக்குறிப்புகள்</p>
+        <h1 style="margin: 0; font-size: 24px;">MISSION SUCCESS ACADEMY</h1>
+        <p style="margin: 5px 0 0 0;">பாடக்குறிப்புகள்</p>
     </div>
+
     <div class="container">
         <h2 id="title">Loading Notes...</h2>
         <div id="notes" class="notes-content"></div>
@@ -25,11 +28,12 @@
     <script>
         const params = new URLSearchParams(window.location.search);
         const folder = params.get('folder');
+        const sub = params.get('sub');
         const file = params.get('file');
 
-        if(folder && file) {
-            // குறிப்பிட்ட ஃபோல்டரில் உள்ள JSON ஃபைலை Fetch மூலம் அழைத்தல்
-            fetch(`data/${folder}/${file}.json`)
+        if(folder && sub && file) {
+            // புதிய URL கட்டமைப்பு: data/folder/subTopic/file.json
+            fetch(`data/${folder}/${sub}/${file}.json`)
                 .then(response => {
                     if(!response.ok) throw new Error("பாடம் கிடைக்கவில்லை");
                     return response.json();
@@ -42,6 +46,8 @@
                     document.getElementById('title').innerText = "பாடம் இன்னும் பதிவேற்றப்படவில்லை!";
                     console.error(error);
                 });
+        } else {
+            document.getElementById('title').innerText = "தவறான பாட இணைப்பு!";
         }
     </script>
 </body>
